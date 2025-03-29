@@ -1,0 +1,67 @@
+#include <iostream>
+#include <unordered_set>
+#include <unordered_map>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int arr[4] = { 2,7,11,15 };
+	int target = 9;
+	int n = 4;
+	/*
+		Approach 1: 
+			1. nested loops to find the pair for each element. TC - O(n^2)
+	*/
+
+	for (int i = 0; i < n; i++) {
+		for (int j = i + 1; j < n; j++) {
+			if (arr[i] + arr[j] == target) {
+				cout << "pair found at index " << i << " : " << j << endl;
+			}
+		}
+	}
+
+	/*
+		Approach 2:
+			1. two pointer aprach, sort then using two pointer can solve. 
+			2. TC - O(nlogn) + O(n)
+			3. SC - O(1)
+	*/
+
+	sort(arr, arr+4);
+	int start = 0; int end = n-1;
+	while (start < end)
+	{
+		auto sum = arr[start] + arr[end];
+		if (sum == target) {
+			cout << "pair found at index " << start << " : " << end << endl;
+			break;
+		}
+		else if (sum > target) {
+			end--;
+		}
+		else {
+			start++;
+		}
+	}
+
+
+	/*
+		Approach 3:
+			1. Hashing find the pair for from second element.
+			2. TC - O(n)
+			3. SC - O(n)
+	*/
+
+	unordered_map<int,int> h;
+	for (int i = 0; i < n; i++)
+	{
+		if (h.find(target - arr[i]) != h.end()) {
+			cout << "pair found at index " << h[target - arr[i]] << " : " << i << endl;
+			break;
+		}
+		h[arr[i]] = i;
+	}
+}
