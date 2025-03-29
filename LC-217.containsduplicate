@@ -1,0 +1,20 @@
+#include <iostream>
+#include <unordered_set>
+#include <unordered_map>
+
+using namespace std;
+
+
+int main()
+{
+	int arr[5] = { 1,2,3,4,5 };
+	unordered_set<int> s;
+	for (auto& it : arr) {
+		if (s.find(it) != s.end()) {
+			cout << "duplciate" << endl;
+			break;
+		}
+		s.insert(it);
+	}
+	cout << "No duplciate found" << endl;
+}
