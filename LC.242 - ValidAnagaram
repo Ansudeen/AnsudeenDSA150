@@ -1,0 +1,101 @@
+#include <iostream>
+#include <unordered_set>
+#include <unordered_map>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+bool isanagram()
+{
+	string s = "anagram";
+	string t = "nagaram";
+
+	unordered_map<char, int> us;
+	unordered_map<char, int> ut;
+
+	/*
+		solution think: it comparison 2 strings why not sort and check one by.
+		Approach 1:
+			1. first length should be same
+			2. then each character should be same. O(n)
+			3. to check each character is same we need t sort frst. O(nlongn)
+
+		Approach 2:
+			1. using hash table count the chars from s and t; O(n)
+			2. then take one hash as outer loop then check the length is same between
+				s&t O(n)
+
+		Approach 3:
+			1. use one hash table to insert from one string and remove from another string.
+			2. At the end hash table should not contain anthing other than 0
+
+	*/
+
+
+	if (s.length() != t.length()) {
+		return false;
+	}
+
+#if 0
+	sort(s.begin(), s.end());
+	sort(t.begin(), t.end());
+
+	for (int i = 0; i < s.length(); i++) {
+		if (s[i] != t[i]) {
+			return false;
+		}
+	}
+
+	return true;
+#endif
+
+#if 0
+	for (int i = 0; i < s.length(); i++){
+		us[s[i]]++;
+		ut[t[i]]++;
+	}
+
+	for (int i = 0; i < s.length(); i++) {
+		auto scount = us[s[i]];
+
+		if (ut.find(s[i]) == ut.end()) {
+			return false;
+		}
+
+		auto tcount = ut[s[i]];
+
+		if (scount != tcount) {
+			return false;
+		}
+		
+	}
+
+	return true;
+#endif
+
+	for (int i = 0; i < s.length(); i++) {
+		us[s[i]]++;
+		us[t[i]]--;
+	}
+
+	for (auto& it : us) {
+		if (it.second != 0) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+int main()
+{
+	auto res = isanagram();
+	if (res) {
+		cout << "Its anagaram" << endl;
+	}
+	else {
+		cout << "Its not anagram" << endl;
+	}
+
+
+}
