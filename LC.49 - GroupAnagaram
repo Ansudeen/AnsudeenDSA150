@@ -1,0 +1,48 @@
+#include <iostream>
+#include <unordered_set>
+#include <unordered_map>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	vector<string> str = { "eat" , "tea", "tan", "ate", "nat", "bat" };
+	unordered_map<string, list<string>> m;
+	/*
+		Approach 1:
+			1. loop every string inside in str
+			2. assigne to tmp varaible and sort it
+			3. now check the tmp str is already in the hash key.
+			4. if present push into the list or 
+	*/
+
+
+	for (int i = 0; i < str.size(); i++)
+	{
+		auto org_str = str[i];
+		auto tmp_str = str[i];
+
+		sort(tmp_str.begin(), tmp_str.end());
+		m[tmp_str].push_back(org_str);
+	}
+
+	/*
+		dry run
+		i    org_str     tmp_str                 m
+		0	    eat            aet             { "aet":[eat]  }
+		1     tea			       aet              [ { "aet":[eat,tea] } ]
+		2     tan			       ant              [{ "aet":[eat,tea] }, { "ant":[tan] } ]
+	*/
+
+
+	for (auto &it : m) {
+		for (auto& xit : it.second) {
+			cout << xit << " | ";
+		}
+		cout << endl;
+	}
+
+
+}
